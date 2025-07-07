@@ -1,0 +1,6 @@
+@LockerManagementSystem_HostAddress = http://localhost:5168
+
+GET {{LockerManagementSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
