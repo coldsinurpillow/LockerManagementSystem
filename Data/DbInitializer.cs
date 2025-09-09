@@ -25,7 +25,7 @@ public static class DbInitializer {
             var places = new List<LockerPlace>();
             foreach (var l in lockers) {
                 for (int p = 1; p <= l.PlaceCount; p++)
-                    places.Add(new LockerPlace { LockerID = l.Id, PlaceIndex = p });
+                    places.Add(new LockerPlace { LockerId = l.Id, PlaceIndex = p });
             }
             db.LockerPlaces.AddRange(places);
             await db.SaveChangesAsync();

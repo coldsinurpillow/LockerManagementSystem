@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LockerManagementSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5afa3d0a0a1250a86e95dda38471d99849a84b1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7a32c639a435777a52b7009f1b8d64a67c9d5cb")]
 [assembly: System.Reflection.AssemblyProductAttribute("LockerManagementSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LockerManagementSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
