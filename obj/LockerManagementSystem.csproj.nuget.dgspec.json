@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Timur\\source\\repos\\LockerManagementSystem\\LockerManagementSystem\\LockerManagementSystem.csproj": {}
+    "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Timur\\source\\repos\\LockerManagementSystem\\LockerManagementSystem\\LockerManagementSystem.csproj": {
+    "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Timur\\source\\repos\\LockerManagementSystem\\LockerManagementSystem\\LockerManagementSystem.csproj",
+        "projectUniqueName": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
         "projectName": "LockerManagementSystem",
-        "projectPath": "C:\\Users\\Timur\\source\\repos\\LockerManagementSystem\\LockerManagementSystem\\LockerManagementSystem.csproj",
-        "packagesPath": "C:\\Users\\Timur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Timur\\source\\repos\\LockerManagementSystem\\LockerManagementSystem\\obj\\",
+        "projectPath": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
+        "packagesPath": "C:\\Users\\murzalin_t\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Timur\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\murzalin_t\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

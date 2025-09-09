@@ -23,22 +23,36 @@ namespace LockerManagementSystem.Migrations
 
             modelBuilder.Entity("LockerManagementSystem.Models.Locker", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Number")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
 
                     b.Property<int>("PlaceCount")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
-                    b.HasKey("Number");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
 
                     b.ToTable("Lockers");
                 });
 
-            modelBuilder.Entity("LockerManagementSystem.Models.LockerAssignment", b =>
+            modelBuilder.Entity("LockerManagementSystem.Models.LockerPlace", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,23 +60,23 @@ namespace LockerManagementSystem.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("LockerNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Place")
+                    b.Property<int>("LockerID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("PlaceIndex")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LockerNumber");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("LockerAssignments");
+                    b.HasIndex("LockerID", "PlaceIndex")
+                        .IsUnique();
+
+                    b.ToTable("LockerPlaces");
                 });
 
             modelBuilder.Entity("LockerManagementSystem.Models.User", b =>
@@ -75,46 +89,51 @@ namespace LockerManagementSystem.Migrations
 
                     b.Property<string>("BarCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Group")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Iin")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LockerManagementSystem.Models.LockerAssignment", b =>
+            modelBuilder.Entity("LockerManagementSystem.Models.LockerPlace", b =>
                 {
                     b.HasOne("LockerManagementSystem.Models.Locker", "Locker")
-                        .WithMany("Assignments")
-                        .HasForeignKey("LockerNumber")
+                        .WithMany("Places")
+                        .HasForeignKey("LockerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LockerManagementSystem.Models.User", "User")
-                        .WithMany("Assignments")
+                        .WithMany("LockerPlaces")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Locker");
 
@@ -123,12 +142,12 @@ namespace LockerManagementSystem.Migrations
 
             modelBuilder.Entity("LockerManagementSystem.Models.Locker", b =>
                 {
-                    b.Navigation("Assignments");
+                    b.Navigation("Places");
                 });
 
             modelBuilder.Entity("LockerManagementSystem.Models.User", b =>
                 {
-                    b.Navigation("Assignments");
+                    b.Navigation("LockerPlaces");
                 });
 #pragma warning restore 612, 618
         }
