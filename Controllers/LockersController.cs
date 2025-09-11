@@ -3,7 +3,6 @@ using LockerManagementSystem.Dtos;
 using LockerManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace LockerManagementSystem.Controllers;
 
@@ -13,7 +12,7 @@ public class LockersController : ControllerBase {
     private readonly AppDbContext _db;
     public LockersController(AppDbContext db) => _db = db;
 
-    //POST /api/lockers
+    // POST /api/lockers
     [HttpPost]
     public async Task<ActionResult> AddLocker([FromBody] AddLockerDto dto) {
         if (dto.PlaceCount <= 0)
@@ -24,10 +23,10 @@ public class LockersController : ControllerBase {
             PlaceCount = dto.PlaceCount,
             Type = dto.Type
         };
+
         _db.Lockers.Add(locker);
         await _db.SaveChangesAsync();
 
-        // генерируем места 1..PlaceCount
         var places = Enumerable.Range(1, dto.PlaceCount)
             .Select(i => new LockerPlace { LockerId = locker.Id, PlaceIndex = i });
         _db.LockerPlaces.AddRange(places);
@@ -39,26 +38,25 @@ public class LockersController : ControllerBase {
 
     // GET /api/lockers/{number}
     [HttpGet("{number}")]
-    public async Task<ActionResult> GetLockerInfo(string number) {
-        var locker = await _db.Lockers.AsNoTracking()
-            .FirstOrDefaultAsync(l => l.Number == number);
+    public async Task<ActionResult<LockerInfoResponse>> GetLockerInfo(string number) {
+        var locker = await _db.Lockers.FirstOrDefaultAsync(l => l.Number == number);
         if (locker is null)
             return NotFound();
 
-        var places = await _db.LockerPlaces.AsNoTracking()
+        var places = await _db.LockerPlaces
             .Where(p => p.LockerId == locker.Id)
             .Include(p => p.User)
             .OrderBy(p => p.PlaceIndex)
-            .Select(p => new {
-                place = p.PlaceIndex,
-                user_id = p.UserId,
-                full_name = p.User == null ? null : $"{p.User.LastName} {p.User.FirstName}",
-                group = p.User.Group,
-                bar_code = p.User.BarCode
-            })
+            .Select(p => new LockerPlaceInfo(
+                p.PlaceIndex,
+                p.UserId,
+                p.User == null ? null : $"{p.User.LastName} {p.User.FirstName}",
+                p.User.Group,
+                p.User.BarCode
+            ))
             .ToListAsync();
 
-        return Ok(new { number = locker.Number, places });
+        return Ok(new LockerInfoResponse(locker.Number, places));
     }
 
     // POST /api/lockers/assign
@@ -85,7 +83,6 @@ public class LockersController : ControllerBase {
                 return Conflict("No free places in locker");
         }
 
-        // снимаем старые назначения у пользователя
         var current = await _db.LockerPlaces.Where(p => p.UserId == dto.UserId).ToListAsync();
         foreach (var c in current)
             c.UserId = null;
@@ -124,7 +121,7 @@ public class LockersController : ControllerBase {
 
         var freeUsers = await _db.Users
             .Where(u => !_db.LockerPlaces.Any(lp => lp.UserId == u.Id))
-            .OrderByDescending(u => u.Id) 
+            .OrderBy(u => u.Id)
             .Take(dto.Count)
             .ToListAsync();
 

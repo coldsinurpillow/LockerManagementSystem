@@ -33,16 +33,12 @@ public class AppDbContext : DbContext {
 
         modelBuilder.Entity<LockerPlace>(e => {
             e.HasKey(x => x.Id);
-
             e.Property(x => x.PlaceIndex).IsRequired();
-
             e.HasIndex(x => new { x.LockerId, x.PlaceIndex }).IsUnique();
-
             e.HasOne(x => x.Locker)
                 .WithMany(l => l.Places)
                 .HasForeignKey(x => x.LockerId)
                 .OnDelete(DeleteBehavior.Cascade);
-
             e.HasOne(x => x.User)
                 .WithMany(u => u.LockerPlaces)
                 .HasForeignKey(x => x.UserId)

@@ -53,7 +53,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LockerInfoResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LockerInfoResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LockerInfoResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -447,6 +464,50 @@
         },
         "additionalProperties": false
       },
+      "LockerInfoResponse": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LockerPlaceInfo"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LockerPlaceInfo": {
+        "type": "object",
+        "properties": {
+          "place": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "group": {
+            "type": "string",
+            "nullable": true
+          },
+          "barCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RemoveAssignedDto": {
         "type": "object",
         "properties": {
@@ -498,15 +559,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "middleName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
+          "fullName": {
             "type": "string",
             "nullable": true
           },
@@ -518,17 +571,13 @@
             "type": "string",
             "nullable": true
           },
-          "iin": {
+          "lockerNumber": {
             "type": "string",
             "nullable": true
           },
-          "activeLockerPlace": {
+          "lockerPlace": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          },
-          "activeLocker": {
-            "type": "string",
             "nullable": true
           }
         },

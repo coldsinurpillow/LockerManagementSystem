@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\murzalin_t\\source\\repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {}
+    "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\murzalin_t\\source\\repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {
+    "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\murzalin_t\\source\\repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
+        "projectUniqueName": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
         "projectName": "LockerManagementSystem",
-        "projectPath": "C:\\Users\\murzalin_t\\source\\repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
+        "projectPath": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\LockerManagementSystem.csproj",
         "packagesPath": "C:\\Users\\murzalin_t\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\murzalin_t\\Source\\Repos\\LockerManagementSystem\\obj\\",
         "projectStyle": "PackageReference",

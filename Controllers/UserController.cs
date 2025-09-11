@@ -12,7 +12,7 @@ public class UsersController : ControllerBase {
     private readonly AppDbContext _db;
     public UsersController(AppDbContext db) => _db = db;
 
-    // POST /api/users  — добавить юзера
+    // POST /api/users — добавить юзера
     [HttpPost]
     public async Task<ActionResult<UserResponseDto>> Create([FromBody] CreateUserDto dto) {
         var user = new User {
@@ -27,9 +27,16 @@ public class UsersController : ControllerBase {
         _db.Users.Add(user);
         await _db.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetById), new { id = user.Id },
-            new UserResponseDto(user.Id, user.FirstName, user.MiddleName, user.LastName,
-                user.Group, user.BarCode, user.Iin, null, null));
+        var response = new UserResponseDto(
+            user.Id,
+            $"{user.LastName} {user.FirstName}",
+            user.Group,
+            user.BarCode,
+            null,
+            null
+        );
+
+        return CreatedAtAction(nameof(GetById), new { id = user.Id }, response);
     }
 
     // GET /api/users/{id} — инфо о юзере (включая активный локер/место)
@@ -43,12 +50,16 @@ public class UsersController : ControllerBase {
             .Include(lp => lp.Locker)
             .FirstOrDefaultAsync(lp => lp.UserId == id);
 
-        return Ok(new UserResponseDto(
-            user.Id, user.FirstName, user.MiddleName, user.LastName,
-            user.Group, user.BarCode, user.Iin,
-            active?.PlaceIndex,
-            active?.Locker.Number
-        ));
+        var response = new UserResponseDto(
+            user.Id,
+            $"{user.LastName} {user.FirstName}",
+            user.Group,
+            user.BarCode,
+            active?.Locker.Number,
+            active?.PlaceIndex
+        );
+
+        return Ok(response);
     }
 
     // PUT /api/users/{id} — обновить данные
@@ -85,14 +96,19 @@ public class UsersController : ControllerBase {
         return NoContent();
     }
 
-    // (опционально) GET /api/users — список (для удобства)
+    // GET /api/users — список всех пользователей
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserResponseDto>>> List() {
         var users = await _db.Users
             .OrderByDescending(u => u.Id)
             .Select(u => new UserResponseDto(
-                u.Id, u.FirstName, u.MiddleName, u.LastName,
-                u.Group, u.BarCode, u.Iin, null, null))
+                u.Id,
+                $"{u.LastName} {u.FirstName}",
+                u.Group,
+                u.BarCode,
+                null,
+                null
+            ))
             .ToListAsync();
 
         return Ok(users);
