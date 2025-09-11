@@ -6,7 +6,7 @@
 
 ## Models / Модели
 
-### 🧑 User — Student / Студент
+### User — Student / Студент
 - **Fields / Поля**: `Id`, `FirstName`, `MiddleName`, `LastName`, `Group`, `BarCode`, `Iin`
 - **Relation / Связь**: can occupy 0 or 1 place in `LockerPlace`  
   может занимать 0 или 1 место в `LockerPlace`
